@@ -1,5 +1,4 @@
 export default function LocationDisplay({ name, lat, lon, mapUrl }) {
-  console.log(mapUrl);
   return (
     <div>
       <p>{name}</p>

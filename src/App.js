@@ -24,6 +24,10 @@ function App() {
     } catch (error) {
       window.alert(`This is not a real place. Status: ${error.name}`);
       event.target.reset();
+
+      setDisplayLocation(false);
+    } finally {
+      setSearchQuery("");
     }
   }
 
@@ -39,6 +43,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Location Search</h1>
       <form onSubmit={getLocation}>
         <input
           type="text"
@@ -46,6 +51,7 @@ function App() {
           placeholder="enter location name"
           onChange={handleChange}
         />
+        <br />
         <button type="submit">Explore</button>
       </form>
 
