@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import axios from "axios";
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState("norwich");
+
+  async function getLocation() {
+    const api = `https://eu1.locationiq.com/v1/search?key=${process.env.REACT_APP_API_KEY}&q=${searchQuery}&format=json`;
+
+    const response = await axios.get(api);
+
+    console.log(response.data[0]);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <input type="text" placeholder="enter location name" />
+        <button type="submit">Search</button>
+      </form>
     </div>
   );
 }
