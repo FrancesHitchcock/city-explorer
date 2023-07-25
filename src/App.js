@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
@@ -9,6 +9,21 @@ function App() {
   const [location, setLocation] = useState({});
   const [mapUrl, setMapUrl] = useState("");
   const [displayLocation, setDisplayLocation] = useState(false);
+  const [weather, setWeather] = useState([]);
+
+  async function getWeather() {
+    const api = `http://localhost:8081/weather?lat=48.86&lon=2.35`;
+
+    const res = await axios.get(api);
+
+    setWeather(res.data);
+
+    // console.log(weather);
+  }
+
+  useEffect(() => {
+    getWeather();
+  }, []);
 
   async function getLocation(event) {
     try {
