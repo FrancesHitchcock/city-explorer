@@ -1,4 +1,4 @@
-export default function Weather({ weather }) {
+export default function Weather({ weather, location }) {
   const weatherMarkup = weather.map((day) => {
     return (
       <div className="day" key={day.date}>
@@ -12,7 +12,7 @@ export default function Weather({ weather }) {
 
   return (
     <section>
-      <h2>Weather for the next 3 days:</h2>
+      <h2>Weather for the next 3 days in {location}</h2>
       {weatherMarkup}
     </section>
   );
