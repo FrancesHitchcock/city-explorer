@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import axios from "axios";
 
 import LocationDisplay from "./components/LocationDisplay/LocationDisplay";
+import Weather from "./Weather/Weather";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,19 +12,13 @@ function App() {
   const [displayLocation, setDisplayLocation] = useState(false);
   const [weather, setWeather] = useState([]);
 
-  async function getWeather() {
-    const api = `http://localhost:8081/weather?lat=48.86&lon=2.35`;
+  async function getWeather({ lat, lon }) {
+    const api = `http://localhost:8081/weather?lat=${lat}&lon=${lon}`;
 
     const res = await axios.get(api);
 
     setWeather(res.data);
-
-    // console.log(weather);
   }
-
-  useEffect(() => {
-    getWeather();
-  }, []);
 
   async function getLocation(event) {
     try {
@@ -35,6 +30,7 @@ function App() {
 
       setDisplayLocation(true);
       handleMap(response.data[0]);
+      getWeather(response.data[0]);
       event.target.query.value = "";
     } catch (error) {
       window.alert(`This is not a real place. Status: ${error.name}`);
@@ -78,6 +74,7 @@ function App() {
           mapUrl={mapUrl}
         />
       )}
+      {weather.length > 0 && <Weather weather={weather} />}
     </div>
   );
 }
